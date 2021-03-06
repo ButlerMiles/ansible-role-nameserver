@@ -16,21 +16,26 @@ No special requirements; note that this role requires root access, so either run
 Available variables are listed below, along with default values (see `defaults/main.yml`)
 
 Switch for first installation.
+
     nameserver_installation: 'false'
 
 Configure DNS Server IP and Network Adress.
+
     nameserver_ip: '192.168.178.2'
     nameserver_network: '192.168.178.0/24'
 
 Configure List of `/etc/named.conf` Includes.
+
     nameserver_named_includes:
       - 'include "/etc/named/named.conf.local";'
 
 Name DNS Zones.
+
     nameserver_default_zone: 'home.lab'
     nameserver_reverse_zone: '178.168.192.in-addr.arpa'
 
 Manage DNS Records (begin with ID 3!)
+
     dns_records:
       - id: 3
         host: host101
@@ -42,9 +47,9 @@ Manage DNS Records (begin with ID 3!)
 
 Ansible Collection: ansible.posix
 
-  - name: ansible.posix
-    type: galaxy
-    source: https://galaxy.ansible.com
+    - name: ansible.posix
+      type: galaxy
+      source: https://galaxy.ansible.com
 
 ## OS Compatibility
 
