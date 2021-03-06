@@ -1,0 +1,8 @@
+---
+ns_prerequisites:
+  - bind9
+  - bind9utils
+  - bind9-doc
+  - dnsutils
+
+nameserver_service_name: bind9

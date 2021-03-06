@@ -1,0 +1,11 @@
+// {{ ansible_managed }}
+//
+zone "{{ nameserver_default_zone }}" {
+	type master;
+	file "/etc/named/zones/{{ nameserver_default_zone }}";
+};
+
+zone "{{ nameserver_reverse_zone }}" {
+	type master;
+	file "/etc/named/zones/{{ nameserver_reverse_zone }}";
+};

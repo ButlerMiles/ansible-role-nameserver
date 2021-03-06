@@ -1,0 +1,7 @@
+---
+- name: "Open up tcp/53 on firewall"
+  ansible.posix.firewalld:
+    service: dns
+    permanent: yes
+    state: enabled
+    immediate: yes

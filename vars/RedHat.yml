@@ -1,0 +1,5 @@
+---
+ns_prerequisites:
+  - bind-utils
+
+nameserver_service_name: named

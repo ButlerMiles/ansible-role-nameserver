@@ -1,0 +1,45 @@
+---
+nameserver_stable_os:
+  - RHEL 8
+  - CentOS 8
+
+nameserver_installation: 'false'
+
+nameserver_ip: '192.168.178.2'
+nameserver_network: '192.168.178.0/24'
+nameserver_named_includes:
+  - 'include "/etc/named/named.conf.local";'
+
+nameserver_default_zone: 'home.lab'
+nameserver_reverse_zone: '178.168.192.in-addr.arpa'
+
+# Count IDs up beginning with 3!
+dns_records:
+  - id: 3
+    host: esxi
+    type: A
+    ip: 192.168.178.200
+  - id: 4
+    host: sysmanage
+    type: A
+    ip: 192.168.178.201
+  - id: 5
+    host: gitlab
+    type: A
+    ip: 192.168.178.222
+  - id: 6
+    host: share
+    type: A
+    ip: 192.168.178.203
+  - id: 7
+    host: kuby
+    type: A
+    ip: 192.168.178.212
+  - id: 8
+    host: elkstack
+    type: A
+    ip: 192.168.178.202
+  - id: 9
+    host: vault
+    type: A
+    ip: 192.168.178.204
