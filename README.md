@@ -8,7 +8,7 @@ No special requirements; note that this role requires root access, so either run
 
     - hosts: foobar
       roles:
-        - role: ansible-role-nfs-client
+        - role: ansible-role-nameserver
           become: yes
 
 ## Role Variables

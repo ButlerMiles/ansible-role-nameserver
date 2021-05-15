@@ -1,6 +1,7 @@
 ---
-#TODO: Which setype for Debian/Suse?
-- name: "Deploy a version of named.conf that is dependent on the OS." #setype obtained by doing ls -Z /etc/named.conf on original file
+# TODO: Which setype for Debian/Suse?
+# setype obtained by doing ls -Z /etc/named.conf on original file
+- name: "Deploy a version of named.conf that is dependent on the OS."
   ansible.builtin.template:
     src: named.conf_{{ ansible_os_family }}.j2
     dest: /etc/named.conf
