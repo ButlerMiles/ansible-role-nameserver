@@ -1,1 +1,58 @@
 ---
+- name: "Configure Defaults File."
+  ansible.builtin.template:
+    src: named.defaults.j2
+    dest: "{{ nameserver_defaults_file }}"
+    mode: 0644
+  notify: restart nameserver
+
+- name: "Deploy named.conf.local."
+  ansible.builtin.template:
+    src: named.conf.local.j2
+    dest: "{{ nameserver_conf_dir }}/named.conf.local"
+    mode: 0644
+  notify: restart nameserver
+
+- name: "Deploy named.conf.options."
+  ansible.builtin.template:
+    src: named.conf.options.j2
+    dest: "{{ nameserver_conf_dir }}/named.conf.options"
+    mode: 0644
+  notify: restart nameserver
+
+- name: "Configure Main Configuration File."
+  ansible.builtin.template:
+    src: "named.conf_{{ ansible_os_family }}.j2"
+    dest: "{{ nameserver_conf_dir }}/named.conf"
+    group: "{{ nameserver_group_name }}"
+    mode: 0640
+    validate: /sbin/named-checkconf %s
+  notify: restart nameserver
+
+- name: "Create Zones Directory."
+  ansible.builtin.file:
+    path: "{{ nameserver_conf_dir }}/zones"
+    state: directory
+    owner: root
+    group: "{{ nameserver_group_name }}"
+    mode: 0750
+
+- name: "Deploy Zone: {{ nameserver_default_zone }}."
+  ansible.builtin.template:
+    src: nameserver_default_zone.j2
+    dest: "{{ nameserver_conf_dir }}/zones/{{ nameserver_default_zone }}"
+    owner: root
+    group: "{{ nameserver_group_name }}"
+    mode: 0644
+    validate: /sbin/named-checkzone {{ nameserver_default_zone }} %s
+  notify: restart nameserver
+
+- name: "Deploy Zone: {{ nameserver_reverse_zone }}."
+  ansible.builtin.template:
+    src: nameserver_reverse_zone.j2
+    dest: "{{ nameserver_conf_dir }}/zones/{{ nameserver_reverse_zone }}"
+    owner: root
+    group: "{{ nameserver_group_name }}"
+    mode: 0644
+    validate: /sbin/named-checkzone {{ nameserver_reverse_zone }} %s
+  notify: restart nameserver
