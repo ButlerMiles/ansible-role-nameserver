@@ -15,5 +15,5 @@ $TTL 604800
 
 ; Other Hosts A records
 {% for dns_record in dns_records %}
-{{ dns_record.host }}.home.lab.       IN      {{ dns_record.type }}       {{ dns_record.ip }}
+{{ dns_record.host }}.{{ nameserver_default_zone }}.       IN      {{ dns_record.type }}       {{ dns_record.ip }}
 {% endfor %}

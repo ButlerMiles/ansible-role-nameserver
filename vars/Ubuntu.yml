@@ -8,4 +8,4 @@ nameserver_user_name: bind
 nameserver_group_name: bind
 nameserver_service_name: bind9
 nameserver_conf_dir: /etc/bind
-nameserver_defaults_file: /etc/default/bind9
+nameserver_defaults_file: /etc/default/named
