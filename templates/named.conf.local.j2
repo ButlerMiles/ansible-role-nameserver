@@ -2,10 +2,10 @@
 //
 zone "{{ nameserver_default_zone }}" {
 	type master;
-	file "/etc/named/zones/{{ nameserver_default_zone }}";
+	file "{{ nameserver_conf_dir }}/zones/{{ nameserver_default_zone }}";
 };
 
 zone "{{ nameserver_reverse_zone }}" {
 	type master;
-	file "/etc/named/zones/{{ nameserver_reverse_zone }}";
+	file "{{ nameserver_conf_dir }}/zones/{{ nameserver_reverse_zone }}";
 };

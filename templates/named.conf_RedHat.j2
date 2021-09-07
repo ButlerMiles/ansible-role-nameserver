@@ -55,8 +55,8 @@ zone "." IN {
         file "named.ca";
 };
 
-include "/etc/named.rfc1912.zones";
-include "/etc/named.root.key";
+include "{{ nameserver_conf_dir }}.rfc1912.zones";
+include "{{ nameserver_conf_dir }}.root.key";
 {% for include in nameserver_named_includes %}
 {{ include }}
 {% endfor %}

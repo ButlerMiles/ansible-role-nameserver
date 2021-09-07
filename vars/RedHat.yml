@@ -1,5 +1,9 @@
 ---
 nameserver_prerequisites:
+  - bind
   - bind-utils
 
+nameserver_user_name: named
+nameserver_group_name: named
 nameserver_service_name: named
+nameserver_conf_dir: /etc/named

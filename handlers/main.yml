@@ -1,0 +1,12 @@
+---
+- name: "enable nameserver"
+  ansible.builtin.service:
+    name: "{{ nameserver_service_name }}"
+    state: started
+    enabled: 'yes'
+
+- name: "restart nameserver"
+  ansible.builtin.service:
+    name: "{{ nameserver_service_name }}"
+    state: restarted
+    enabled: 'yes'

@@ -9,21 +9,23 @@
 - name: "Include OS Family specific Variables."
   ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
-- name: "Install prerequisites."
+- name: "Include Distribution specific Variables."
+  include_vars: "{{ ansible_distribution }}.yml"
+  changed_when: 'false'
+  failed_when: 'false'
+
+- name: "Install Prerequisites."
   ansible.builtin.package:
-    name: "{{ item }}"
+    name: "{{ nameserver_prerequisites }}"
     state: present
-  with_items: "{{ nameserver_prerequisites }}"
   when: nameserver_installation | bool
+  notify: enable nameserver
+
+- name: "Disable systemd-resolved so it does not interfere."
+  ansible.builtin.service:
+    name: systemd-resolved
+    state: stopped
+    enabled: 'no'
 
 - name: "Include OS Family specific Playbook."
   ansible.builtin.include_tasks: "{{ ansible_os_family }}.yml"
-
-- name: "Include Configuration Deployment Playbook."
-  ansible.builtin.include_tasks: "deployment.yml"
-
-- name: "(Re)Start DNS Service."
-  ansible.builtin.service:
-    name: "{{ nameserver_service_name }}"
-    state: restarted
-    enabled: 'yes'

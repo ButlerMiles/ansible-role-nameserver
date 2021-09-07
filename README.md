@@ -19,15 +19,15 @@ Switch for first installation.
 
     nameserver_installation: 'false'
 
-Configure DNS Server IP and Network Adress.
+Configure DNS Server IP and Network Address.
 
     nameserver_ip: '192.168.178.2'
     nameserver_network: '192.168.178.0/24'
 
-Configure List of `/etc/named.conf` Includes.
+Configure List of `{{ nameserver_conf_dir }}.conf` Includes.
 
     nameserver_named_includes:
-      - 'include "/etc/named/named.conf.local";'
+      - 'include "{{ nameserver_conf_dir }}/named.conf.local";'
 
 Name DNS Zones.
 

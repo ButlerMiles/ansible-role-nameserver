@@ -1,25 +1,38 @@
 ---
 nameserver_stable_os:
   - RHEL 8
+    # - CentOS 7
   - CentOS 8
+  # - Debian 9
+  - Debian 10
+  # - Ubuntu 18
+  - Ubuntu 20
+  # - Fedora 32
+  # - Fedora 33
 
 nameserver_installation: 'false'
 
-nameserver_ip: '10.0.1.1'
-nameserver_network: '10.0.0.0/8'
-nameserver_named_includes:
-  - 'include "/etc/named/named.conf.local";'
+nameserver_ip: "{{ ansible_default_ipv4.address }}"
+nameserver_network: "{{ ansible_default_ipv4.network }}/24"
+nameserver_use_ipv6: 'false'
 
-nameserver_default_zone: 'home.lab'
-nameserver_reverse_zone: '1.0.10.in-addr.arpa'
+nameserver_named_includes: []
+#   - 'include "{{ nameserver_conf_dir }}/named.conf.local";'
+
+nameserver_default_zone: 'local.lan'
+nameserver_reverse_zone: '0.168.192.in-addr.arpa'
 
 # Count IDs up beginning with 3!
-dns_records: []
-  # - id: 3
-  #   host: esxi
-  #   type: A
-  #   ip: 10.0.1.10
-  # - id: 4
-  #   host: sysmanage
-  #   type: A
-  #   ip: 10.0.1.15
+dns_records:
+  - id: 3
+    host: foo
+    type: A
+    ip: 192.168.0.1
+  - id: 4
+    host: bar
+    type: A
+    ip: 192.168.0.2
+  - id: 5
+    host: example
+    type: A
+    ip: 192.168.0.3
