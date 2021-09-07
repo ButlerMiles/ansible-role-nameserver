@@ -1,33 +1,29 @@
 ---
 - name: "Preflight - Fail if target host is not stable for this Role."
-  fail:
+  ansible.builtin.fail:
     msg: "This role is not stable for the target operating system, {{ ansible_distribution }} {{ ansible_distribution_major_version }}."
   when: (ansible_distribution is not defined) or
         (ansible_distribution_version is not defined) or
         (ansible_distribution+" "+ansible_distribution_major_version not in nameserver_stable_os)
 
 - name: "Include OS Family specific Variables."
-  include_vars: "{{ ansible_os_family }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
 - name: "Install prerequisites."
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
-  with_items: "{{ ns_prerequisites }}"
-  when: "{{ nameserver_installation | bool }}"
+  with_items: "{{ nameserver_prerequisites }}"
+  when: nameserver_installation | bool
 
 - name: "Include OS Family specific Playbook."
-  include_tasks: "{{ ansible_os_family }}.yml"
+  ansible.builtin.include_tasks: "{{ ansible_os_family }}.yml"
 
-- name: "Enable dns service"
-  ansible.builtin.systemd:
-    name: "{{ nameserver_service_name }}"
-    enabled: yes
+- name: "Include Configuration Deployment Playbook."
+  ansible.builtin.include_tasks: "deployment.yml"
 
-- name: "Include config Deployment Playbook."
-  include_tasks: "deployment.yml"
-
-- name: "(Re)Start DNS Service"
-  ansible.builtin.systemd:
+- name: "(Re)Start DNS Service."
+  ansible.builtin.service:
     name: "{{ nameserver_service_name }}"
     state: restarted
+    enabled: 'yes'

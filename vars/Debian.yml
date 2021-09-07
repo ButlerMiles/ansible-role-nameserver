@@ -1,5 +1,5 @@
 ---
-ns_prerequisites:
+nameserver_prerequisites:
   - bind9
   - bind9utils
   - bind9-doc
